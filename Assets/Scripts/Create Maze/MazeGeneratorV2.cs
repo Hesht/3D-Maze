@@ -82,8 +82,8 @@ public class MazeGeneratorV2 : MonoBehaviour {
 			Transform piece = (Transform)Instantiate (deadEnd);
 			piece.transform.position = new Vector3 (i * 5, 0, 0);
 			piece.Rotate(new Vector3(0, 90, 0));
-			piece.GetComponent<MazePiece> ().rotation = 0;
-			piece.GetComponent<MazePiece> ().rotatePoints ();
+			piece.GetComponent<MazePiece> ().rotation = 90;
+			piece.GetComponent<MazePiece> ().rotatePoints (90);
 			map.Add (piece.transform.position, piece);
 
 		}
@@ -93,7 +93,7 @@ public class MazeGeneratorV2 : MonoBehaviour {
 			if (!map.ContainsKey (piece.transform.position)) {
 				piece.Rotate (new Vector3 (0, 180, 0));
 				piece.GetComponent<MazePiece> ().rotation = 180;
-				piece.GetComponent<MazePiece> ().rotatePoints ();
+				piece.GetComponent<MazePiece> ().rotatePoints (180);
 				map.Add (piece.transform.position, piece);
 			}
 		}
@@ -113,7 +113,7 @@ public class MazeGeneratorV2 : MonoBehaviour {
 			if (!map.ContainsKey (piece.transform.position)) {
 				piece.Rotate (new Vector3 (0, 270, 0));
 				piece.GetComponent<MazePiece> ().rotation = 270;
-				piece.GetComponent<MazePiece> ().rotatePoints ();
+				piece.GetComponent<MazePiece> ().rotatePoints (270);
 				map.Add (piece.transform.position, piece);
 			}
 		}

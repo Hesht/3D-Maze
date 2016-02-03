@@ -14,12 +14,14 @@ public class MazeGeneratorV3 : MonoBehaviour {
 	public int width;
 	public Vector3 target;
 	public Vector3 startpoint;
+	public Transform player;
 
 	private Dictionary<Vector3, Transform> map = new Dictionary<Vector3, Transform>();
+	private List<Transform> deadEnds;
 	// Use this for initialization
 	void Start () {
-		target = new Vector3 (Random.Range (0, width), 0, 0);
-		startpoint = new Vector3(0,0,Random.Range(0,height));
+		//target = new Vector3 (Random.Range (0, width), 0, 0);
+		startpoint = new Vector3(0,0,(Random.Range(1,height - 1)) * 5);
 		if(height == 0)
 		{
 			height = 5;
@@ -28,10 +30,57 @@ public class MazeGeneratorV3 : MonoBehaviour {
 		{
 			width = 5;
 		}
-		//edges ();
-		//buildMaze();
+		edges ();
+		buildMaze();
 		for (int i = 0; i < 5; i++) {
 			//buildMaze(false);
+		}
+
+		GameObject pl = GameObject.FindGameObjectWithTag ("Player");
+		pl.transform.position = new Vector3(5, 0, startpoint.z);
+	}
+
+
+	private void edges()
+	{
+		for (int i = 0; i < width; i++) {
+			Transform piece = (Transform)Instantiate (deadEnd);
+			piece.transform.position = new Vector3 (i * 5, 0, 0);
+			piece.Rotate(new Vector3(0, 90, 0));
+			piece.GetComponent<MazePiece> ().rotation = 90;
+			piece.GetComponent<MazePiece> ().rotatePoints (0);
+			map.Add (piece.transform.position, piece);
+
+		}
+		for (int j = 0; j < height; j++) {
+			Transform piece = (Transform)Instantiate (deadEnd);
+			piece.transform.position = new Vector3 (0, 0, j * 5);
+			if (!map.ContainsKey (piece.transform.position)) {
+				piece.Rotate (new Vector3 (0, 180, 0));
+				piece.GetComponent<MazePiece> ().rotation = 180;
+				piece.GetComponent<MazePiece> ().rotatePoints ();
+				map.Add (piece.transform.position, piece);
+			}
+		}
+		for (int j = 0; j < height; j++) {
+			Transform piece = (Transform)Instantiate (deadEnd);
+			piece.transform.position = new Vector3 (width * 5, 0, j * 5);
+			if (!map.ContainsKey (piece.transform.position)) {
+				piece.Rotate (new Vector3 (0, 0, 0));
+				piece.GetComponent<MazePiece> ().rotation = 0;
+				piece.GetComponent<MazePiece> ().rotatePoints (0);
+				map.Add (piece.transform.position, piece);
+			}
+		}
+		for (int i = 0; i < width; i++) {
+			Transform piece = (Transform)Instantiate (deadEnd);
+			piece.transform.position = new Vector3 (i * 5, 0, height * 5);
+			if (!map.ContainsKey (piece.transform.position)) {
+				piece.Rotate (new Vector3 (0, 270, 0));
+				piece.GetComponent<MazePiece> ().rotation = 270;
+				piece.GetComponent<MazePiece> ().rotatePoints ();
+				map.Add (piece.transform.position, piece);
+			}
 		}
 	}
 
@@ -98,24 +147,97 @@ public class MazeGeneratorV3 : MonoBehaviour {
 			{
 				if(p.waypoints.Contains(look))
 				{
-					Vector3 checkThis = new Vector3 (currentPiece.position.x + (look.y * 5), 0, currentPiece.position.y + (look.y * 5));
+					Vector3 checkThis = new Vector3 (currentPiece.position.x + (look.x * 5), 0, currentPiece.position.z + (look.y * 5));
 
-					if(map.ContainsKey(checkThis))
+					if(!map.ContainsKey(checkThis))
 					{
-						pathNotTaken.Add(map [checkThis]);
+						Transform piece = choosePiece (look, checkThis);
+						pathNotTaken.Add (piece);
 					}
 				}	
 			}
 			if (pathNotTaken.Count > 0) 
 			{
-
+				currentPiece = pathNotTaken [0];
+				pathNotTaken.RemoveAt(0);
+			} 
+			else 
+			{
+				win = true;
 			}
 		}
 	}
 
-	private Transform choosePiece(Vector3 look)
+	private Transform choosePiece(Vector3 look, Vector3 pos)
 	{
 		Transform piece = noWay;
+
+		if (pos.x < width && pos.x > 0 && pos.y < height && pos.y > 0) 
+		{
+			piece = (Transform)Instantiate (deadEnd);
+			piece.transform.position = pos;
+
+			int paths = piece.GetComponent<MazePiece> ().checkNearby (ref piece, look);
+
+			map.Add (pos, piece);
+		} 
+		else 
+		{
+			int type = Random.Range (0, 3);
+			int rotType = Random.Range (1, 5);
+			int rot = 0;
+
+			if (rotType == 1) {
+				rot = 90;
+			} else if (rotType == 2) {
+				rot = 180;
+			} else if (rotType == 3) {
+				rot = 270;
+			}
+			if (type == 0) 
+			{
+				piece = (Transform)Instantiate (corridor);
+				piece.transform.position = pos;
+				piece.transform.Rotate (new Vector3 (0, rot, 0));
+				piece.GetComponent<MazePiece> ().rotation = rot;
+				piece.GetComponent<MazePiece> ().rotatePoints ();
+				int paths = piece.GetComponent<MazePiece> ().checkNearby (ref piece, look);
+
+				if (paths == 0) {
+					Destroy (piece.gameObject);
+					type = 1;
+				} else {
+					map.Add (pos, piece);
+				}
+			} 
+			if (type == 1) 
+			{
+				piece = (Transform)Instantiate (turnRight);
+				piece.transform.position = pos;
+				piece.transform.Rotate (new Vector3 (0, rot, 0));
+				piece.GetComponent<MazePiece> ().rotation = rot;
+				piece.GetComponent<MazePiece> ().rotatePoints ();
+				int paths = piece.GetComponent<MazePiece> ().checkNearby (ref piece, look);
+
+				if (paths == 0) {
+					Destroy (piece.gameObject);
+					type = 2;
+				}else {
+					map.Add (pos, piece);
+				}
+			} 
+			if (type == 2) 
+			{
+				piece = (Transform)Instantiate (junction);
+				piece.transform.position = pos;
+				piece.transform.Rotate (new Vector3 (0, rot, 0));
+				piece.GetComponent<MazePiece> ().rotation = rot;
+				piece.GetComponent<MazePiece> ().rotatePoints ();
+				piece.GetComponent<MazePiece> ().checkNearby (ref piece, look);
+
+				map.Add (pos, piece);
+			} 
+		}
 
 		return piece;
 	}
