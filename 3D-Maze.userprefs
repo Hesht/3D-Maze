@@ -1,37 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Create Maze/MazeGeneratorV3.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Player/Flashlight.cs">
     <Files>
       <File FileName="Assets/Scripts/Create Maze/MazeGeneratorV2.cs" Line="86" Column="53" />
-      <File FileName="Assets/Scripts/Create Maze/MazePiece.cs" Line="21" Column="1" />
-      <File FileName="Assets/Scripts/Create Maze/MazeGeneratorV3.cs" Line="157" Column="1" />
+      <File FileName="Assets/Scripts/Create Maze/MazePiece.cs" Line="138" Column="36" />
+      <File FileName="Assets/Scripts/Create Maze/MazeGeneratorV3.cs" Line="40" Column="43" />
+      <File FileName="Assets/Scripts/Player/Flashlight.cs" Line="2" Column="26" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="3D-Maze" expanded="True">
-            <Node name="Assembly-CSharp" expanded="True">
-              <Node name="Scripts" expanded="True">
-                <Node name="Create Maze" expanded="True">
-                  <Node name="MazeGeneratorV3.cs" selected="True" />
-                </Node>
-              </Node>
-            </Node>
-            <Node name="Assembly-CSharp-Editor" expanded="True" />
-          </Node>
-        </State>
-      </Pad>
-      <Pad Id="MonoDevelop.NUnit.TestPad">
-        <State name="__root__">
-          <Node name="3D-Maze" expanded="True" selected="True" />
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/Hesht/3D-Maze/Assets/Scripts/Create Maze/MazeGeneratorV3.cs" line="157" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
