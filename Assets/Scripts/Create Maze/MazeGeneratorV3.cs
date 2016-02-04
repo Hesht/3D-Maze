@@ -30,16 +30,32 @@ public class MazeGeneratorV3 : MonoBehaviour {
 		{
 			width = 5;
 		}
-		edges ();
-		buildMaze();
-		for (int i = 0; i < 5; i++) {
-			//buildMaze(false);
+		while((map.Count < ((height + width) * 2) + (height * 2)))
+		{
+			edges ();
+			buildMaze();
+
+			if (!(map.Count > ((height + width) * 2) + (height * 2))) 
+			{
+				clearMap ();
+			}
 		}
+
+		Cursor.lockState = CursorLockMode.Locked;
+		Cursor.visible = false;
 
 		GameObject pl = GameObject.FindGameObjectWithTag ("Player");
 		pl.transform.position = new Vector3(5, 0, startpoint.z);
 	}
 
+	private void clearMap()
+	{
+		foreach (KeyValuePair<Vector3,Transform> p in map) 
+		{
+			Destroy (p.Value.gameObject);
+		}
+		map = new Dictionary<Vector3, Transform> ();
+	}
 
 	private void edges()
 	{

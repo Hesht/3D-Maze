@@ -11,6 +11,6 @@ public class FlashlightBattery : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		GetComponent<Text> ().text = light.battery.ToString ();
+		GetComponent<Text> ().text = "Battery: " + light.battery.ToString ();
 	}
 }
