@@ -16,6 +16,7 @@ public class MazeGeneratorV3 : MonoBehaviour {
 	public Vector3 startpoint;
 	public Transform player;
 	public Transform exit;
+	public Dictionary<Vector3, Transform> Map{get{return map;}}
 
 	private Dictionary<Vector3, Transform> map = new Dictionary<Vector3, Transform>();
 	private List<Transform> deadEnds;
@@ -171,7 +172,7 @@ public class MazeGeneratorV3 : MonoBehaviour {
 				{
 					Transform winner = (Transform)Instantiate (exit);
 					winner.position = deadEnds [ran].position;
-					winner.rotation = deadEnd.rotation;
+					winner.rotation = deadEnds[ran].rotation;
 					Destroy (deadEnds [ran].gameObject);
 					win = true;
 				}

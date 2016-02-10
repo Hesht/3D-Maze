@@ -1,26 +1,18 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-<<<<<<< Updated upstream
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Create Maze\MazeGeneratorV3.cs">
-    <Files>
-      <File FileName="Assets\Scripts\UI\FlashlightBattery.cs" Line="14" Column="43" />
-      <File FileName="Assets\Scripts\Create Maze\MazeGeneratorV2.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Create Maze\MazePiece.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Create Maze\MazeGeneratorV3.cs" Line="40" Column="17" />
-      <File FileName="Assets\Scripts\Player\Flashlight.cs" Line="2" Column="26" />
-=======
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Create Maze/MazeGeneratorV3.cs">
     <Files>
       <File FileName="Assets/Scripts/Create Maze/MazeGeneratorV2.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Create Maze/MazePiece.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Create Maze/MazeGeneratorV3.cs" Line="147" Column="77" />
-      <File FileName="Assets/Scripts/Player/Flashlight.cs" Line="19" Column="29" />
-      <File FileName="Assets/Scripts/UI/FlashlightBattery.cs" Line="9" Column="52" />
->>>>>>> Stashed changes
+      <File FileName="Assets/Scripts/Create Maze/MazeGeneratorV3.cs" Line="24" Column="58" />
+      <File FileName="Assets/Scripts/Player/Flashlight.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/UI/FlashlightBattery.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/Hesht/3D-Maze/Assets/Scripts/Create Maze/MazeGeneratorV3.cs" line="169" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
