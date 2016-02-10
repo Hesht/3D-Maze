@@ -15,6 +15,7 @@ public class MazeGeneratorV3 : MonoBehaviour {
 	public Vector3 target;
 	public Vector3 startpoint;
 	public Transform player;
+	public Transform exit;
 
 	private Dictionary<Vector3, Transform> map = new Dictionary<Vector3, Transform>();
 	private List<Transform> deadEnds;
@@ -43,6 +44,9 @@ public class MazeGeneratorV3 : MonoBehaviour {
 
 		Cursor.lockState = CursorLockMode.Locked;
 		Cursor.visible = false;
+
+		makeWinnable ();
+		
 
 		GameObject pl = GameObject.FindGameObjectWithTag ("Player");
 		pl.transform.position = new Vector3(5, 0, startpoint.z);
@@ -110,7 +114,9 @@ public class MazeGeneratorV3 : MonoBehaviour {
 		bool win = false;
 		List<Vector2> lookAround = new List<Vector2>();
 		Vector2 lastMove = new Vector2(0,0);
-		List<Transform> pathNotTaken = new List<Transform>();
+		Dictionary<Vector2, KeyValuePair<Vector2, Transform>> pathNotTaken = new Dictionary<Vector2, KeyValuePair<Vector2, Transform>>();
+		List<Transform> deadEnds = new List<Transform> ();
+		List<Transform> used = new List<Transform> ();
 
 		lookAround.Add (new Vector2 (1, 0));
 		lookAround.Add (new Vector2 (-1, 0));
@@ -127,16 +133,61 @@ public class MazeGeneratorV3 : MonoBehaviour {
 			{
 				if(p.waypoints.Contains(look) && look != lastMove * -1)
 				{
-					Vector3 checkThis = new Vector3 (currentPiece.position.x + (look.y * 5), 0, currentPiece.position.y + (look.y * 5));
-					if(map.ContainsKey(checkThis))
+					Vector3 checkThis = new Vector3 (currentPiece.position.x + (look.x * 5), 0, currentPiece.position.z + (look.y * 5));
+					if(map.ContainsKey(checkThis) && !used.Contains(map[checkThis]) && !pathNotTaken.ContainsKey(new Vector2(checkThis.x, checkThis.z)))
 					{
-						pathNotTaken.Add(map [checkThis]);
+						try
+						{
+							KeyValuePair<Vector2, Transform> point = new KeyValuePair<Vector2, Transform>(look, map[checkThis]);
+							pathNotTaken.Add(new Vector2(checkThis.x, checkThis.z), point);
+						}
+						catch
+						{
+							Debug.Log (checkThis.ToString());
+							Debug.Log (pathNotTaken[new Vector2(checkThis.x, checkThis.z)].ToString());
+							throw new UnityException ();
+						}
+
 					}
 				}	
 			}
 			if (pathNotTaken.Count > 0) 
 			{
-
+				KeyValuePair<Vector2, KeyValuePair<Vector2, Transform>> pair = new KeyValuePair<Vector2, KeyValuePair<Vector2, Transform>> ();
+				foreach (KeyValuePair<Vector2, KeyValuePair<Vector2, Transform>> point in pathNotTaken) 
+				{
+					pair = point;
+					currentPiece = point.Value.Value;
+					lastMove = point.Value.Key;
+					break;
+				}
+				used.Add (pair.Value.Value);
+				pathNotTaken.Remove (pair.Key);
+			} 
+			else 
+			{
+				int ran = Random.Range (0, deadEnds.Count);
+				try
+				{
+					Transform winner = (Transform)Instantiate (exit);
+					winner.position = deadEnds [ran].position;
+					winner.rotation = deadEnd.rotation;
+					Destroy (deadEnds [ran].gameObject);
+					win = true;
+				}
+				catch 
+				{
+					Debug.Log (ran.ToString());
+				}
+				finally 
+				{
+					win = true;
+				}
+			}
+			if (currentPiece.tag == "Dead End" && currentPiece.position != startpoint && !(currentPiece.position.x == 0 && currentPiece.position.y == height * 5)
+				&& !(currentPiece.position.x == width * 5 && currentPiece.position.y == 0) && !(currentPiece.position.x == 0 && currentPiece.position.y == 0) ) 
+			{
+				deadEnds.Add (currentPiece);
 			}
 		}
 	}
