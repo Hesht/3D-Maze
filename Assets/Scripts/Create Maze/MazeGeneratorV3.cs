@@ -17,6 +17,7 @@ public class MazeGeneratorV3 : MonoBehaviour {
 	public Transform player;
 	public Transform exit;
 	public Dictionary<Vector3, Transform> Map{get{return map;}}
+	public Transform enemy;
 
 	private Dictionary<Vector3, Transform> map = new Dictionary<Vector3, Transform>();
 	private List<Transform> deadEnds;
@@ -51,6 +52,7 @@ public class MazeGeneratorV3 : MonoBehaviour {
 
 		GameObject pl = GameObject.FindGameObjectWithTag ("Player");
 		pl.transform.position = new Vector3(5, 0, startpoint.z);
+		enemy.position =  new Vector3(5, 0, startpoint.z);
 	}
 
 	private void clearMap()

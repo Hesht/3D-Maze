@@ -7,15 +7,14 @@ public class TheEnemy : MonoBehaviour {
 	public Vector3 pos;
 	public float countDown;
 	public float speed;
-	public TrackPlayer player;
-	public MazeGeneratorV3 maze;
-	public Vector2 look;
+	public Transform p;
 	List<Transform> path;
 	Transform target;
+	TrackPlayer player;
 
 	// Use this for initialization
 	void Start () {
-		
+		player = p.GetComponent<TrackPlayer> ();
 	}
 	
 	// Update is called once per frame
@@ -32,18 +31,31 @@ public class TheEnemy : MonoBehaviour {
 
 	private void itFollows()
 	{
-		
+		if (player.Path.Count > 0)
+		{
+			transform.position = Vector3.MoveTowards (transform.position, player.Path [0], speed);
+			if (transform.position == player.Path [0])
+			{
+				player.removePoint ();
+			}
+		}
+		else
+		{
+			//KILL KILLLLLL!.... Also kill if they intersect.
+		}
 	}
 
-	private void getBestPath()
+	void OnTriggerEnter(Collider coll)
 	{
-		Vector3 posCheck = player.piecePosition;
-		target = maze.Map[posCheck];
-
-		foreach(KeyValuePair<Vector3, Transform> piece in maze.Map)
+		if (coll.gameObject.name == "Floor")
 		{
-			//It needs to know when it decided to go one way rather than another
-			//Also it needs to know the entire path, maybe also add in something to change the current path rather than completely recalculate it each time?
+			if (player.Path.Count > 0)
+			{
+				if (coll.transform.parent.position == player.Path [0])
+				{
+					player.removePoint ();
+				}
+			}
 		}
 	}
 }
