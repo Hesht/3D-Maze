@@ -53,9 +53,11 @@
      <Compile Include="Assets\Scripts\Create Maze\MazePieceV2.cs" />
      <Compile Include="Assets\Scripts\Player\Flashlight.cs" />
      <Compile Include="Assets\Scripts\Player\TrackPlayer.cs" />
+     <Compile Include="Assets\Scripts\Powerups\Battery.cs" />
      <Compile Include="Assets\Scripts\The Enemy\Footsteps.cs" />
      <Compile Include="Assets\Scripts\The Enemy\TheEnemy.cs" />
      <Compile Include="Assets\Scripts\UI\FlashlightBattery.cs" />
+     <Compile Include="Assets\Scripts\UI\Spares.cs" />
      <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
      <None Include="Assets\Standard Assets\Characters\ThirdPersonCharacter\ThirdPersonCharacterGuidelines.txt" />
      <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />

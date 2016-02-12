@@ -4,6 +4,7 @@ using System.Collections;
 public class Flashlight : MonoBehaviour {
 	public bool _isOn = true;
 	public float battery = 100;
+	public int spares = 0;
 	Light light;
 	// Use this for initialization
 	void Start () {
@@ -17,13 +18,18 @@ public class Flashlight : MonoBehaviour {
 		}
 		if (_isOn) {
 			battery -= Time.deltaTime;
-			if (battery <= 10) {
-				flicker ();
-			}
+			flicker ();
 		}
 		if (battery <= 0 && _isOn) 
 		{
-			toggleOn ();
+			if (spares > 0)
+			{
+				loadNew ();
+			}
+			else
+			{
+				toggleOn ();
+			}
 		}
 	}
 
@@ -53,8 +59,14 @@ public class Flashlight : MonoBehaviour {
 	private void flicker()
 	{
 		if (light.intensity > 0) {
-			float rnd = Random.Range (0.1f, 0.6f);
+			float rnd = Random.Range (battery/100, 1.0f);
 			light.intensity = rnd;
 		}
+	}
+
+	private void loadNew()
+	{
+		spares--;
+		battery = 100;
 	}
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using System.Linq;
 
 public class MazeGeneratorV3 : MonoBehaviour {
 	public Transform corridor;
@@ -18,11 +19,14 @@ public class MazeGeneratorV3 : MonoBehaviour {
 	public Transform exit;
 	public Dictionary<Vector3, Transform> Map{get{return map;}}
 	public Transform enemy;
+	public List<Transform> powerups;
 
 	private Dictionary<Vector3, Transform> map = new Dictionary<Vector3, Transform>();
 	private List<Transform> deadEnds;
+	private int powerupLimit;
 	// Use this for initialization
 	void Start () {
+		powerupLimit = (height + width) /10;
 		//target = new Vector3 (Random.Range (0, width), 0, 0);
 		startpoint = new Vector3(0,0,(Random.Range(1,height - 1)) * 5);
 		if(height == 0)
@@ -48,7 +52,8 @@ public class MazeGeneratorV3 : MonoBehaviour {
 		Cursor.visible = false;
 
 		makeWinnable ();
-		
+
+		addPowerups ();
 
 		GameObject pl = GameObject.FindGameObjectWithTag ("Player");
 		pl.transform.position = new Vector3(5, 0, startpoint.z);
@@ -110,6 +115,26 @@ public class MazeGeneratorV3 : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+	}
+
+	private void addPowerups()
+	{
+		List<Vector3> keys = map.Keys.ToList();
+		foreach (Transform powerup in powerups)
+		{
+			while (powerupLimit > 0)
+			{
+				int piece = Random.Range (0, keys.Count);
+
+				Vector3 pos = keys [piece];
+
+				Transform p = (Transform)Instantiate(powerup);
+
+				p.position = pos;
+
+				powerupLimit--;
+			}
+		}
 	}
 
 	private void makeWinnable()

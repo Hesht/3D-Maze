@@ -8,6 +8,11 @@ public class TheEnemy : MonoBehaviour {
 	public float countDown;
 	public float speed;
 	public Transform p;
+	public AudioClip step1;
+	public AudioClip step2;
+
+	bool one = true;
+	AudioSource source;
 	List<Transform> path;
 	Transform target;
 	TrackPlayer player;
@@ -15,6 +20,7 @@ public class TheEnemy : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		player = p.GetComponent<TrackPlayer> ();
+		source = gameObject.GetComponent<AudioSource> ();
 	}
 	
 	// Update is called once per frame
@@ -38,6 +44,20 @@ public class TheEnemy : MonoBehaviour {
 			{
 				player.removePoint ();
 			}
+			if (!source.isPlaying)
+			{
+				if (one)
+				{
+					source.clip = step1;
+					one = false;
+				}
+				else
+				{
+					source.clip = step2;
+					one = true;
+				}
+				source.Play ();
+			}
 		}
 		else
 		{
@@ -56,6 +76,10 @@ public class TheEnemy : MonoBehaviour {
 					player.removePoint ();
 				}
 			}
+		}
+		else if (countDown <= 0 && coll.gameObject.name == "Player")
+		{
+			
 		}
 	}
 }
