@@ -16,10 +16,12 @@ public class TheEnemy : MonoBehaviour {
 	List<Transform> path;
 	Transform target;
 	TrackPlayer player;
+	Player _player;
 
 	// Use this for initialization
 	void Start () {
 		player = p.GetComponent<TrackPlayer> ();
+		_player = p.GetComponent<Player> ();
 		source = gameObject.GetComponent<AudioSource> ();
 	}
 	
@@ -62,6 +64,7 @@ public class TheEnemy : MonoBehaviour {
 		else
 		{
 			//KILL KILLLLLL!.... Also kill if they intersect.
+			_player.kill();
 		}
 	}
 

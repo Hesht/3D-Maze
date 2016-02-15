@@ -11,24 +11,30 @@ public class MazeGeneratorV3 : MonoBehaviour {
 	public Transform turnLeft;
 	public Transform junction;
 	public Transform noWay;
-	public int height;
-	public int width;
-	public Vector3 target;
-	public Vector3 startpoint;
 	public Transform player;
 	public Transform exit;
-	public Dictionary<Vector3, Transform> Map{get{return map;}}
 	public Transform enemy;
+
+	public int height;
+	public int width;
+
+	public Vector3 target;
+	public Vector3 startpoint;
+
+	public Dictionary<Vector3, Transform> Map{get{return map;}}
 	public List<Transform> powerups;
 
 	private Dictionary<Vector3, Transform> map = new Dictionary<Vector3, Transform>();
 	private List<Transform> deadEnds;
+
 	private int powerupLimit;
+
 	// Use this for initialization
 	void Start () {
 		powerupLimit = (height + width) /10;
-		//target = new Vector3 (Random.Range (0, width), 0, 0);
+
 		startpoint = new Vector3(0,0,(Random.Range(1,height - 1)) * 5);
+
 		if(height == 0)
 		{
 			height = 5;
@@ -37,6 +43,7 @@ public class MazeGeneratorV3 : MonoBehaviour {
 		{
 			width = 5;
 		}
+
 		while((map.Count < ((height + width) * 2) + (height * 2)))
 		{
 			edges ();
@@ -60,6 +67,9 @@ public class MazeGeneratorV3 : MonoBehaviour {
 		enemy.position =  new Vector3(5, 0, startpoint.z);
 	}
 
+	/// <summary>
+	/// Clears the Maze.
+	/// </summary>
 	private void clearMap()
 	{
 		foreach (KeyValuePair<Vector3,Transform> p in map) 
@@ -69,6 +79,9 @@ public class MazeGeneratorV3 : MonoBehaviour {
 		map = new Dictionary<Vector3, Transform> ();
 	}
 
+	/// <summary>
+	/// Adds edges to the maze.
+	/// </summary>
 	private void edges()
 	{
 		for (int i = 0; i < width; i++) {
@@ -117,6 +130,9 @@ public class MazeGeneratorV3 : MonoBehaviour {
 
 	}
 
+	/// <summary>
+	/// Adds the powerups.
+	/// </summary>
 	private void addPowerups()
 	{
 		List<Vector3> keys = map.Keys.ToList();
@@ -137,6 +153,9 @@ public class MazeGeneratorV3 : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Makes the maze winnable by finding a place to put the final block for the player to escape.... And fall into the endless abyss.
+	/// </summary>
 	private void makeWinnable()
 	{
 		bool win = false;
@@ -175,7 +194,6 @@ public class MazeGeneratorV3 : MonoBehaviour {
 							Debug.Log (pathNotTaken[new Vector2(checkThis.x, checkThis.z)].ToString());
 							throw new UnityException ();
 						}
-
 					}
 				}	
 			}
@@ -194,22 +212,40 @@ public class MazeGeneratorV3 : MonoBehaviour {
 			} 
 			else 
 			{
-				int ran = Random.Range (0, deadEnds.Count);
-				try
+				if (deadEnds.Count > 1)
 				{
-					Transform winner = (Transform)Instantiate (exit);
-					winner.position = deadEnds [ran].position;
-					winner.rotation = deadEnds[ran].rotation;
-					Destroy (deadEnds [ran].gameObject);
-					win = true;
+					int ran = Random.Range (0, deadEnds.Count);
+					try
+					{
+						Transform winner = (Transform)Instantiate (exit);
+						winner.position = deadEnds [ran].position;
+						winner.rotation = deadEnds [ran].rotation;
+						Destroy (deadEnds [ran].gameObject);
+						win = true;
+					}
+					catch
+					{
+						Debug.Log (ran.ToString ());
+					}
+					finally
+					{
+						win = true;
+					}
 				}
-				catch 
+				else
 				{
-					Debug.Log (ran.ToString());
-				}
-				finally 
-				{
-					win = true;
+					clearMap ();
+
+					while((map.Count < ((height + width) * 2) + (height * 2)))
+					{
+						edges ();
+						buildMaze();
+
+						if (!(map.Count > ((height + width) * 2) + (height * 2))) 
+						{
+							clearMap ();
+						}
+					}
 				}
 			}
 			if (currentPiece.tag == "Dead End" && currentPiece.position != startpoint && !(currentPiece.position.x == 0 && currentPiece.position.y == height * 5)
@@ -220,6 +256,9 @@ public class MazeGeneratorV3 : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Builds the maze.
+	/// </summary>
 	private void buildMaze()
 	{
 		bool win = false;
@@ -263,6 +302,12 @@ public class MazeGeneratorV3 : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Chooses the piece.
+	/// </summary>
+	/// <returns>The piece.</returns>
+	/// <param name="look">Look vector.</param>
+	/// <param name="pos">Position.</param>
 	private Transform choosePiece(Vector3 look, Vector3 pos)
 	{
 		Transform piece = noWay;

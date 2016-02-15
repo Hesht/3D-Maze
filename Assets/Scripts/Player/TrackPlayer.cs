@@ -33,20 +33,6 @@ public class TrackPlayer : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionEnter(Collision coll)
-	{
-		piecePosition = coll.collider.transform.position;
-		Vector3 lastPiece = new Vector3 (0,1000,0);
-		if (_path.Count > 1) 
-		{
-			lastPiece = _path [_path.Count - 1];
-		}
-		if (!(piecePosition == lastPiece))
-		{
-			_path.Add (piecePosition);
-		}
-	}
-
 	public void removePoint()
 	{
 		_path.RemoveAt (0);
