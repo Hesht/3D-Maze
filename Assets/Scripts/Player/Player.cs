@@ -4,13 +4,17 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
 	public Transform gameOver;
+	public Transform youWin;
 
 	bool isAlive;
+	bool isWinner;
 
 	// Use this for initialization
 	void Start () {
 		isAlive = true;
+		isWinner = false;
 		gameOver.gameObject.SetActive (false);
+		youWin.gameObject.SetActive (false);
 	}
 	
 	// Update is called once per frame
@@ -23,13 +27,17 @@ public class Player : MonoBehaviour {
 
 	void OnTriggerEnter(Collider coll)
 	{
-		if (coll.gameObject.name == "The Enemy")
+		if (coll.gameObject.name == "The Enemy" && !isWinner)
 		{
 			TheEnemy e = coll.gameObject.GetComponent<TheEnemy> ();
 			if (e.countDown <= 0)
 			{
-				isAlive = false;
+				kill ();
 			}
+		}
+		if (coll.gameObject.name == "Escape" && !isWinner)
+		{
+			isWinner = true;
 		}
 	}
 		

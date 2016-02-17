@@ -58,6 +58,7 @@
      <Compile Include="Assets\Scripts\The Enemy\Footsteps.cs" />
      <Compile Include="Assets\Scripts\The Enemy\TheEnemy.cs" />
      <Compile Include="Assets\Scripts\UI\FlashlightBattery.cs" />
+     <Compile Include="Assets\Scripts\UI\LaunchGame.cs" />
      <Compile Include="Assets\Scripts\UI\Spares.cs" />
      <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
      <None Include="Assets\Standard Assets\Characters\ThirdPersonCharacter\ThirdPersonCharacterGuidelines.txt" />

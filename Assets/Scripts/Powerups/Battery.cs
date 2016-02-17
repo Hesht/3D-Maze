@@ -2,10 +2,10 @@
 using System.Collections;
 
 public class Battery : MonoBehaviour {
-	Flashlight light;
+	Flashlight _light;
 	// Use this for initialization
 	void Start () {
-		light = GameObject.FindGameObjectWithTag ("Flashlight").GetComponent<Flashlight>();
+		_light = GameObject.FindGameObjectWithTag ("Flashlight").GetComponent<Flashlight>();
 	}
 	
 	// Update is called once per frame
@@ -17,7 +17,7 @@ public class Battery : MonoBehaviour {
 	{
 		if (coll.gameObject.name == "FPSController")
 		{
-			light.spares++;
+			_light.spares++;
 			Destroy (gameObject.transform.parent.gameObject);
 		}
 	}

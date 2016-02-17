@@ -3,14 +3,14 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class FlashlightBattery : MonoBehaviour {
-	public Flashlight light;
+	public Flashlight _light;
 	// Use this for initialization
 	void Start () {
-		light = GameObject.FindGameObjectWithTag ("Flashlight").GetComponent<Flashlight>();
+		_light = GameObject.FindGameObjectWithTag ("Flashlight").GetComponent<Flashlight>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		GetComponent<Text> ().text = "Battery: " + light.battery.ToString ();
+		GetComponent<Text> ().text = "Battery: " + _light.battery.ToString ();
 	}
 }
