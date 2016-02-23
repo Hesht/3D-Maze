@@ -11,6 +11,8 @@ public class TheEnemy : MonoBehaviour {
 	public AudioClip step1;
 	public AudioClip step2;
 	public float rotationSpeed;
+	public Transform youAreNotAlone;
+	public float warningCount;
 
 	bool one = true;
 	AudioSource source;
@@ -25,6 +27,7 @@ public class TheEnemy : MonoBehaviour {
 		player = p.GetComponent<TrackPlayer> ();
 		_player = p.GetComponent<Player> ();
 		source = gameObject.GetComponent<AudioSource> ();
+		youAreNotAlone.gameObject.SetActive (false);
 		look = new Vector3 (0.0f, 0.0f, 1.0f);
 	}
 	
@@ -36,6 +39,15 @@ public class TheEnemy : MonoBehaviour {
 		} 
 		else
 		{
+			if (warningCount >= 0)
+			{
+				youAreNotAlone.gameObject.SetActive (true);
+				warningCount -= Time.deltaTime;
+			}
+			else
+			{
+				youAreNotAlone.gameObject.SetActive (false);
+			}
 			itFollows ();
 		}
 	}

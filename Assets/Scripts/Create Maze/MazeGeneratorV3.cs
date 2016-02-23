@@ -257,12 +257,12 @@ public class MazeGeneratorV3 : MonoBehaviour {
 				{
 					clearMap ();
 
-					while((map.Count < ((height + width) * 2) + (height * 2)))
+					while((map.Count < ((height + width) * 2)))
 					{
 						edges ();
 						buildMaze();
 
-						if (!(map.Count > ((height + width) * 2) + (height * 2))) 
+						if ((map.Count < ((height + width) * 2)) )
 						{
 							clearMap ();
 						}

@@ -10,7 +10,8 @@ public class Player : MonoBehaviour {
 	bool isWinner;
 
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
 		isAlive = true;
 		isWinner = false;
 		gameOver.gameObject.SetActive (false);
@@ -18,7 +19,8 @@ public class Player : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
 		if (!isAlive)
 		{
 			gameOver.gameObject.SetActive (true);
