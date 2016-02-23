@@ -10,6 +10,7 @@ public class TheEnemy : MonoBehaviour {
 	public Transform p;
 	public AudioClip step1;
 	public AudioClip step2;
+	public float rotationSpeed;
 
 	bool one = true;
 	AudioSource source;
@@ -17,12 +18,14 @@ public class TheEnemy : MonoBehaviour {
 	Transform target;
 	TrackPlayer player;
 	Player _player;
+	Vector3 look;
 
 	// Use this for initialization
 	void Start () {
 		player = p.GetComponent<TrackPlayer> ();
 		_player = p.GetComponent<Player> ();
 		source = gameObject.GetComponent<AudioSource> ();
+		look = new Vector3 (0.0f, 0.0f, 1.0f);
 	}
 	
 	// Update is called once per frame
@@ -42,6 +45,11 @@ public class TheEnemy : MonoBehaviour {
 		if (player.Path.Count > 0)
 		{
 			transform.position = Vector3.MoveTowards (transform.position, player.Path [0], speed);
+			look = (player.Path [0] - transform.position).normalized;
+			Quaternion lookRotation = Quaternion.LookRotation(look);
+
+			transform.rotation = Quaternion.Slerp (transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+
 			if (transform.position == player.Path [0])
 			{
 				player.removePoint ();
