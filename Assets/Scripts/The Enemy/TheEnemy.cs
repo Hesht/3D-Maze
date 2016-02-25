@@ -33,23 +33,16 @@ public class TheEnemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (countDown > 0) 
+		if (warningCount >= 0)
 		{
-			countDown -= Time.deltaTime;
-		} 
+			youAreNotAlone.gameObject.SetActive (true);
+			warningCount -= Time.deltaTime;
+		}
 		else
 		{
-			if (warningCount >= 0)
-			{
-				youAreNotAlone.gameObject.SetActive (true);
-				warningCount -= Time.deltaTime;
-			}
-			else
-			{
-				youAreNotAlone.gameObject.SetActive (false);
-			}
-			itFollows ();
+			youAreNotAlone.gameObject.SetActive (false);
 		}
+		itFollows ();
 	}
 
 	private void itFollows()
@@ -99,10 +92,6 @@ public class TheEnemy : MonoBehaviour {
 					player.removePoint ();
 				}
 			}
-		}
-		else if (countDown <= 0 && coll.gameObject.name == "Player")
-		{
-			
 		}
 	}
 }

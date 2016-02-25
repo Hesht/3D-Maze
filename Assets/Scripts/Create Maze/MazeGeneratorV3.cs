@@ -13,6 +13,7 @@ public class MazeGeneratorV3 : MonoBehaviour {
 	public Transform player;
 	public Transform exit;
 	public Transform enemy;
+	public Transform enemyController;
 
 	public int height;
 	public int width;
@@ -53,12 +54,12 @@ public class MazeGeneratorV3 : MonoBehaviour {
 
 		}
 
-		while((map.Count < ((height + width) * 2)))
+		while((map.Count < ((height + width))))
 		{
 			edges ();
 			buildMaze();
 
-			if ((map.Count < ((height + width) * 2)) )
+			if ((map.Count < ((height + width))) )
 			{
 				clearMap ();
 			}
@@ -77,7 +78,8 @@ public class MazeGeneratorV3 : MonoBehaviour {
 			GameObject pl = GameObject.FindGameObjectWithTag ("Player");
 			pl.transform.position = new Vector3(5, 0, startpoint.z);
 			enemy.position =  new Vector3(5, 0, startpoint.z);
-			enemy.GetComponent<TheEnemy>().countDown = map.Count/2;
+			enemyController.GetComponent<ActivateEnemy>().deactivateEnemy();
+			enemyController.GetComponent<ActivateEnemy>().countDown = map.Count/2;
 		}
 	}
 
@@ -177,7 +179,7 @@ public class MazeGeneratorV3 : MonoBehaviour {
 	/// <summary>
 	/// Makes the maze winnable by finding a place to put the final block for the player to escape.... And fall into the endless abyss.
 	/// </summary>
-	private void makeWinnable()
+	private bool makeWinnable()
 	{
 		bool win = false;
 		List<Vector2> lookAround = new List<Vector2>();
@@ -257,16 +259,17 @@ public class MazeGeneratorV3 : MonoBehaviour {
 				{
 					clearMap ();
 
-					while((map.Count < ((height + width) * 2)))
+					while((map.Count < ((height + width) )))
 					{
 						edges ();
 						buildMaze();
 
-						if ((map.Count < ((height + width) * 2)) )
+						if ((map.Count < ((height + width) )) )
 						{
 							clearMap ();
 						}
 					}
+					return makeWinnable ();
 				}
 			}
 			if (currentPiece.tag == "Dead End" && currentPiece.position != startpoint && !(currentPiece.position.x == 0 && currentPiece.position.y == height * 5)
@@ -275,6 +278,7 @@ public class MazeGeneratorV3 : MonoBehaviour {
 				deadEnds.Add (currentPiece);
 			}
 		}
+		return win;
 	}
 
 	/// <summary>

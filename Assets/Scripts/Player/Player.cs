@@ -32,10 +32,9 @@ public class Player : MonoBehaviour {
 		if (coll.gameObject.name == "The Enemy" && !isWinner)
 		{
 			TheEnemy e = coll.gameObject.GetComponent<TheEnemy> ();
-			if (e.countDown <= 0)
-			{
-				kill ();
-			}
+
+			kill ();
+
 		}
 		if (coll.gameObject.name == "Escape" && !isWinner)
 		{
