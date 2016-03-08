@@ -30,6 +30,10 @@ public class Player : MonoBehaviour {
 		{
 			youWin.gameObject.SetActive (true);
 		}
+		if (transform.position.y < -3)
+		{
+			youWin.gameObject.SetActive (true);
+		}
 	}
 
 	void OnTriggerEnter(Collider coll)
