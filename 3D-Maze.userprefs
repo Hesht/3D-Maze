@@ -1,14 +1,38 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Create Maze/MazeGeneratorV3.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/The Enemy/TheEnemy.cs">
     <Files>
-      <File FileName="Assets/Scripts/Create Maze/MazeGeneratorV3.cs" Line="80" Column="1" />
+      <File FileName="Assets/Scripts/Create Maze/MazeGeneratorV3.cs" Line="81" Column="1" />
+      <File FileName="Assets/Scripts/The Enemy/ActivateEnemy.cs" Line="8" Column="17" />
+      <File FileName="Assets/Scripts/The Enemy/TheEnemy.cs" Line="45" Column="22" />
+      <File FileName="Assets/Scripts/Player/Player.cs" Line="11" Column="49" />
+      <File FileName="Assets/Scripts/Player/Flashlight.cs" Line="23" Column="16" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="3D-Maze" expanded="True">
+            <Node name="Assembly-CSharp" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="Create Maze" expanded="True" />
+                <Node name="Player" expanded="True" />
+                <Node name="The Enemy" expanded="True">
+                  <Node name="TheEnemy.cs" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.NUnit.TestPad">
+        <State name="__root__">
+          <Node name="3D-Maze" expanded="True" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/Hesht/3D-Maze/Assets/Scripts/Create Maze/MazeGeneratorV3.cs" line="58" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

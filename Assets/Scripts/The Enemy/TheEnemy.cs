@@ -42,7 +42,10 @@ public class TheEnemy : MonoBehaviour {
 		{
 			youAreNotAlone.gameObject.SetActive (false);
 		}
-		itFollows ();
+		if(!_player.Winner)
+		{
+			itFollows ();
+		}
 	}
 
 	private void itFollows()

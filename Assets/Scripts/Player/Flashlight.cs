@@ -18,7 +18,10 @@ public class Flashlight : MonoBehaviour {
 		}
 		if (_isOn) {
 			battery -= Time.deltaTime;
-			flicker ();
+			if (battery <= 20)
+			{
+				flicker ();
+			}
 		}
 		if (battery <= 0 && _isOn) 
 		{
@@ -59,7 +62,7 @@ public class Flashlight : MonoBehaviour {
 	private void flicker()
 	{
 		if (_light.intensity > 0) {
-			float rnd = Random.Range (battery/100, 1.0f);
+			float rnd = Random.Range (battery/100, 5.0f);
 			_light.intensity = rnd;
 		}
 	}

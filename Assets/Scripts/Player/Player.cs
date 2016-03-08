@@ -8,6 +8,7 @@ public class Player : MonoBehaviour {
 
 	bool isAlive;
 	bool isWinner;
+	public bool Winner { get { return isWinner; } }
 
 	// Use this for initialization
 	void Start () 
@@ -24,6 +25,10 @@ public class Player : MonoBehaviour {
 		if (!isAlive)
 		{
 			gameOver.gameObject.SetActive (true);
+		}
+		if (isWinner)
+		{
+			youWin.gameObject.SetActive (true);
 		}
 	}
 
