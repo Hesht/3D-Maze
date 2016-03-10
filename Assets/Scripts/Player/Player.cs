@@ -9,6 +9,8 @@ public class Player : MonoBehaviour {
 	bool isAlive;
 	bool isWinner;
 	public bool Winner { get { return isWinner; } }
+	public float countdownToGameOver;
+	public string gameOverSceneName;
 
 	// Use this for initialization
 	void Start () 
@@ -29,10 +31,15 @@ public class Player : MonoBehaviour {
 		if (isWinner)
 		{
 			youWin.gameObject.SetActive (true);
+			countdownToGameOver -= Time.deltaTime;
+			if (countdownToGameOver <= 0)
+			{
+				UnityEngine.SceneManagement.SceneManager.LoadScene (gameOverSceneName);
+			}
 		}
 		if (transform.position.y < -3)
 		{
-			youWin.gameObject.SetActive (true);
+			isWinner = true;
 		}
 	}
 
